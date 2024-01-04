@@ -46,10 +46,38 @@
             <div class="site-logo">
               <a href="index.html" class="js-logo-clone"><strong class="text-primary">E-</strong>PHARMA</a>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
+      <nav class="site-navigation text-right text-md-center" role="navigation">
+              <ul class="site-menu js-clone-nav d-none d-lg-block">
+                <li class="active"><a href="userhome">HOME</a></li>
+                <li><a href="userviewproduct">SHOP</a></li>
+                <li><a href="userprofile">PROFILE</a></li>
+<!--                <li class="has-children">-->
+<!--                  <a href="#">Products</a>-->
+<!--                  <ul class="dropdown">-->
+<!--                    <li><a href="#">Supplements</a></li>-->
+<!--                    <li class="has-children">-->
+<!--                      <a href="#">Vitamins</a>-->
+<!--                      <ul class="dropdown">-->
+<!--                        <li><a href="#">Supplements</a></li>-->
+<!--                        <li><a href="#">Vitamins</a></li>-->
+<!--                        <li><a href="#">Diet &amp; Nutrition</a></li>-->
+<!--                        <li><a href="#">Tea &amp; Coffee</a></li>-->
+<!--                      </ul>-->
+<!--                    </li>-->
+<!--                    <li><a href="#">Diet &amp; Nutrition</a></li>-->
+<!--                    <li><a href="#">Tea &amp; Coffee</a></li>-->
+<!--                    -->
+<!--                  </ul>-->
+<!--                </li>-->
+                  <li><a href="{% url 'viewcart' %}">CART</a></li>
+                <li><a href="userhistory">HISTORY</a></li>
+                <li><a href="Logout">LOGOUT</a></li>
+              </ul>
+            </nav>
     </div>
 
     <div class="site-section">
@@ -84,7 +112,7 @@
                 {% endfor %}
                 </tbody>
               </table>
-               <p style="margin-top:50px; margin-left:30rem;"><a href="userviewproduct" class="btn btn-primary px-5 py-3">Back to Home</a></p>
+               <p style="margin-top:50px; margin-left:30rem;"><a href="userhome" class="btn btn-primary px-5 py-3">Back to Home</a></p>
             </div>
           </form>
         </div>

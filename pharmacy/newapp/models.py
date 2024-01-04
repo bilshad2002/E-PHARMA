@@ -8,6 +8,10 @@ class user(models.Model):
     PhoneNo = models.IntegerField()
     Password = models.CharField(max_length=20)
     type = models.IntegerField()
+    status =(('APPROVED','APPROVED'),
+             ('PENDING','PENDING'),
+             ('REJECT','REJECT'))
+    entry = models.CharField(choices=status,max_length=20,default='PENDING')
 
     def __str__(self):
         return self.UserName

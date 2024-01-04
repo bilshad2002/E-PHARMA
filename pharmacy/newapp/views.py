@@ -19,9 +19,9 @@ def reg(request):
         data = user.objects.create(UserName=UserName,Email=Email,Address=Address,PhoneNo=PhoneNo,Password=Password,type=1)
         data.save()
         # return HttpResponse("created")
-        return render(request,'login.html')
+        return redirect(Login)
     else:
-        return render(request,'register.html')
+        return redirect(reg)
 def Login(request):
     if request.method == 'POST':
         UserName = request.POST['UserName']
@@ -30,14 +30,14 @@ def Login(request):
             users = user.objects.get(UserName=UserName,Password=Password)
             if users.type == 1:
                 request.session['id'] = users.id
-                return render(request,'index.html')
+                return redirect(userhome)
             if users.type == 0:
                 request.session['id'] = users.id
-                return render(request,'pharmahome.html')
+                return redirect(pharmahome)
             else:
                 return HttpResponse('error')
         except Exception as e:
-            return HttpResponse({e})
+            return HttpResponse('error')
     else:
         return render(request,'login.html')
 
@@ -195,7 +195,13 @@ def pharmahistory(request):
     data=booking.objects.all()
     return render(request,'pharmahistory.html',{'pharmahist':data})
 
-
-
+def searchproduct(request):
+    if request.method=='GET':
+        result=request.GET.get('search')
+        products= Product.objects.all().filter(MedicineName=result)
+        return render(request,'search.html',{'products':products})
+    else:
+        print('no given information')
+        return redirect(request,'search.html',{})
 
 
