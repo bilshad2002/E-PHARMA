@@ -20,9 +20,9 @@
         <section class="signup">
             <div class="container">
                 <div class="signup-content">
-                    <form method="POST" id="signup-form" class="signup-form" action="reg">
+                    <form method="POST" id="signup-form" class="signup-form" action="pharreg">
                         {% csrf_token %}
-                        <h2 class="form-title">Create User</h2>
+                        <h2 class="form-title">Create pharmacy account</h2>
                         <div class="form-group">
                             <input type="text" class="form-input" name="UserName" id="name" placeholder="Your UserName" required/>
                         </div>
@@ -40,7 +40,7 @@
                             <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                            <label for="agree-term" ><span><span></span></span>You Have to Register a  <a href="pharreg" class="term-service ">Parmacy ?</a></label>
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
                         </div>
                         <div class="form-group">
                             <input type="submit" name="submit" id="submit" class="form-submit" value="Sign up"/>

@@ -6,8 +6,9 @@ from django.contrib.auth.models import User,auth
 
 # Create your views here.
 
-def start(request):
-    return render(request,'register.html')
+def front(request):
+    return render(request,'frontpage.html')
+
 
 def reg(request):
     if request.method == 'POST':
@@ -21,7 +22,21 @@ def reg(request):
         # return HttpResponse("created")
         return redirect(Login)
     else:
-        return redirect(reg)
+        return render(request,'register.html')
+
+def pharreg(request):
+    if request.method == 'POST':
+        UserName = request.POST['UserName']
+        Email = request.POST['Email']
+        Address = request.POST['Address']
+        PhoneNo = request.POST['PhoneNo']
+        Password = request.POST['Password']
+        data = user.objects.create(UserName=UserName, Email=Email, Address=Address, PhoneNo=PhoneNo,Password=Password,type=0,)
+        data.save()
+        # return HttpResponse("created")
+        return redirect(Login)
+    else:
+        return render(request,'pharmaReg.html')
 def Login(request):
     if request.method == 'POST':
         UserName = request.POST['UserName']
@@ -31,13 +46,19 @@ def Login(request):
             if users.type == 1:
                 request.session['id'] = users.id
                 return redirect(userhome)
-            if users.type == 0:
+            if users.type == 0 and users.entry == 'APPROVED':
                 request.session['id'] = users.id
                 return redirect(pharmahome)
             else:
-                return HttpResponse('error')
+                context = {
+                    'message': "*waiting for admins approval"
+                }
+                return render(request, 'login.html', context)
         except Exception as e:
-            return HttpResponse('error')
+            context = {
+                'message': "*invalid credentials"
+            }
+            return render(request, 'login.html', context)
     else:
         return render(request,'login.html')
 
@@ -81,12 +102,15 @@ def edit_userprofile(request,id):
         print(users)
         form = UserEditForm(instance=users)
         if request.method == 'POST':
-            form = UserEditForm(request.POST,instance=users)
-            if form.is_valid():
-                form.save()
-                return redirect(userprofile)
+            users.UserName=request.POST['UserName']
+            users.Email = request.POST['Email']
+            users.PhoneNo = request.POST['PhoneNo']
+            users.Address = request.POST['Address']
+            users.Password = request.POST['Password']
+            users.save()
+            return redirect(userprofile)
         else:
-            return render(request,'edit-userprofile.html',{'form':form,'user':users})
+            return render(request,'user-editprofile.html',{'user':users})
 
 def Logout(request):
     if 'id' in request.session:
@@ -159,12 +183,9 @@ def buymedicine(request,id):
         userid=request.session['id']
         user1= user.objects.get(id=userid)
         medicineid=Product.objects.get(id=id)
-        if booking.objects.filter(userid=user1,medicineid=medicineid).exists():
-            return redirect(erro404)
-        else:
-            data=booking.objects.create(userid=user1,medicineid=medicineid)
-            data.save()
-            return redirect(dummypay)
+        data=booking.objects.create(userid=user1,medicineid=medicineid)
+        data.save()
+        return redirect(dummypay)
 
 def cartdlt(request,id):
     if 'id' in request.session:
@@ -196,12 +217,15 @@ def pharmahistory(request):
     return render(request,'pharmahistory.html',{'pharmahist':data})
 
 def searchproduct(request):
-    if request.method=='GET':
-        result=request.GET.get('search')
-        products= Product.objects.all().filter(MedicineName=result)
+    if request.method=='POST':
+        result=request.POST.get('search')
+        products= Product.objects.all().filter(MedicineName__icontains=result)
         return render(request,'search.html',{'products':products})
     else:
         print('no given information')
         return redirect(request,'search.html',{})
 
+
+def edit(request):
+    return render(request,'edit-userprofile.html')
 

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <title>E-PHARMA &mdash; Colorlib Template</title>
+  <title>Pharmative &mdash; Colorlib Template</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -23,7 +23,11 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
-
+<style>
+  img{
+     width: 221px;
+  }
+</style>
 <body>
 
   <div class="site-wrap">
@@ -44,14 +48,14 @@
         <div class="d-flex align-items-center justify-content-between">
           <div class="logo">
             <div class="site-logo">
-              <a href="index.html" class="js-logo-clone"><strong class="text-primary">E-</strong>PHARMA</a>
+              <a class="js-logo-clone"><strong class="text-primary">E-</strong>PHARMA</a>
             </div>
           </div>
           <nav class="site-navigation text-right text-md-center" role="navigation">
               <ul class="site-menu js-clone-nav d-none d-lg-block">
-                <li><a href="{% url 'userhome' %}">HOME</a></li>
-                <li><a href="{% url 'userviewproduct' %}">SHOP</a></li>
-                <li><a href="{% url 'userprofile' %}">PROFILE</a></li>
+                <li><a href="userhome">HOME</a></li>
+                <li class="active"><a href="userviewproduct">SHOP</a></li>
+                <li><a href="userprofile">PROFILE</a></li>
 <!--                <li class="has-children">-->
 <!--                  <a href="#">Products</a>-->
 <!--                  <ul class="dropdown">-->
@@ -71,35 +75,66 @@
 <!--                  </ul>-->
 <!--                </li>-->
                   <li><a href="{% url 'viewcart' %}">CART</a></li>
-                <li><a href="{% url 'userhistory' %}">HISTORY</a></li>
+                <li><a href="userhistory">HISTORY</a></li>
               </ul>
             </nav>
           <div class="icons">
-
+            <a href="#" class="icons-btn d-inline-block js-search-open"><span class="icon-search"></span></a>
           </div>
         </div>
       </div>
     </div>
 
+
+
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="{% url 'userprofile' %}">Profile</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Edit Profile</strong></div>
+          <div class="col-md-12 mb-0"><a href="userhome">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
         </div>
       </div>
     </div>
-
-   
-
-
-
-    <footer class="site-footer">
+    <div class="site-section bg-light">
+      <div class="container">
+        <div class="row">
+            {% if products %}
+          {% for i in products %}
+          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
+             <a href="{% url 'Add_cart' id=i.id %}" class="onsale">ADD TO CART</a>
+            <a> <img src="{{i.Image.url}}" alt="Image"></a>
+            <h3 class="text-dark"><a>{{i.MedicineName}}</a></h3>
+            <p class="price"><del>95.00</del> &mdash; {{i.Price}}</p>
+            <p style="color: blue;"><button><a href="{% url 'buymedicine' id=i.id %}"> BOOK NOW</a></button></p>
+          </div>
+          {% endfor %}
+            {% else %}
+            <P>No Valid Products</P>
+            {% endif %}
+        </div>
+        <div class="row mt-5">
+          <div class="col-md-12 text-center">
+            <div class="site-block-27">
+              <ul>
+                <li><a href="#">&lt;</a></li>
+                <li class="active"><span>1</span></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&gt;</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="site-footer bg-light">
       <div class="container">
         <div class="row">
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
 
             <div class="block-7">
-              <h3 class="footer-heading mb-4">About <strong class="text-primary">E-PHARMA</strong></h3>
+              <h3 class="footer-heading mb-4">About <strong class="text-primary">Pharmative</strong></h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius quae reiciendis distinctio voluptates
                 sed dolorum excepturi iure eaque, aut unde.</p>
             </div>
@@ -128,7 +163,19 @@
 
           </div>
         </div>
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <p>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;
+              <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
+              with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
+                class="text-primary">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+          </div>
 
+        </div>
       </div>
     </footer>
   </div>
